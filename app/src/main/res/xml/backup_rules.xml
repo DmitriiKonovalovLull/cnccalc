@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Бэкапим только базу данных и настройки -->
+    <include domain="database" path="tool_database"/>
+    <include domain="sharedpref" path="preferences"/>
+</full-backup-content>
