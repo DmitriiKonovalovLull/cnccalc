@@ -2,14 +2,13 @@ package com.example.cnccalc.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.cnccalc.domain.models.ToolType
 
 @Entity(tableName = "tools")
 data class ToolEntity(
     @PrimaryKey
     val id: String,
     val name: String,
-    val type: String,
+    val type: String, // Храним как String вместо ToolType
     val diameter: Float,
     val flutes: Int,
     val material: String,
@@ -22,7 +21,7 @@ data class ToolEntity(
         return com.example.cnccalc.data.models.Tool(
             id = id,
             name = name,
-            type = ToolType.valueOf(type),
+            type = com.example.cnccalc.domain.models.ToolType.valueOf(type), // Конвертируем здесь
             diameter = diameter,
             flutes = flutes,
             material = material,
@@ -32,19 +31,19 @@ data class ToolEntity(
             imageUrl = imageUrl
         )
     }
-}
-
-fun com.example.cnccalc.data.models.Tool.toEntity(): ToolEntity {
-    return ToolEntity(
-        id = id,
-        name = name,
-        type = type.name,
-        diameter = diameter,
-        flutes = flutes,
-        material = material,
-        description = description,
-        cuttingSpeed = cuttingSpeed,
-        feedPerTooth = feedPerTooth,
-        imageUrl = imageUrl
-    )
+    // Функция расширения для конвертации Tool в ToolEntity
+    fun com.example.cnccalc.data.models.Tool.toEntity(): ToolEntity {
+        return ToolEntity(
+            id = id,
+            name = name,
+            type = type.name, // Конвертируем enum в string
+            diameter = diameter,
+            flutes = flutes,
+            material = material,
+            description = description,
+            cuttingSpeed = cuttingSpeed,
+            feedPerTooth = feedPerTooth,
+            imageUrl = imageUrl
+        )
+    }
 }

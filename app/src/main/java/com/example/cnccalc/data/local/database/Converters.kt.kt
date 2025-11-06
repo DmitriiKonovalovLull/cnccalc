@@ -1,16 +1,28 @@
 package com.example.cnccalc.data.local.database
 
 import androidx.room.TypeConverter
-import java.util.Date
+import com.example.cnccalc.domain.models.ToolType
+import com.example.cnccalc.domain.models.MaterialType
 
 class Converters {
+
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
+    fun fromToolType(toolType: ToolType): String {
+        return toolType.name
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
+    fun toToolType(value: String): ToolType {
+        return ToolType.valueOf(value)
+    }
+
+    @TypeConverter
+    fun fromMaterialType(materialType: MaterialType): String {
+        return materialType.name
+    }
+
+    @TypeConverter
+    fun toMaterialType(value: String): MaterialType {
+        return MaterialType.valueOf(value)
     }
 }

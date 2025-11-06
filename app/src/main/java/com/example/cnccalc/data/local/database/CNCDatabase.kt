@@ -19,7 +19,7 @@ import com.example.cnccalc.data.local.entities.*
     version = 1,
     exportSchema = false
 )
-@TypeConverters(Converters::class)
+@TypeConverters(Converters::class) // Добавляем конвертеры
 abstract class CNCDatabase : RoomDatabase() {
 
     abstract fun toolDao(): ToolDao

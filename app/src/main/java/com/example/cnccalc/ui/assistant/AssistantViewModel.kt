@@ -1,5 +1,7 @@
 package com.example.cnccalc.ui.assistant
 
+import com.example.cnccalc.data.models.ChatMessage
+import com.example.cnccalc.domain.use_cases.ProcessQuestionUseCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cnccalc.data.models.ChatMessage
