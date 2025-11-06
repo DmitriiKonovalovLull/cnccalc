@@ -1,13 +1,20 @@
-package com.example.cnccalc.data.model
+package com.example.cnccalc.data.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.example.cnccalc.domain.models.ToolType
 
-@Entity(tableName = "tools")
 data class Tool(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val name: String,          // название инструмента
-    val type: String,          // фреза, резец, сверло
-    val photoUri: String?,     // фото (URI в хранилище телефона)
-    val params: String?        // параметры (можно JSON или строку)
-)
+    val id: String,
+    val name: String,
+    val type: ToolType,
+    val diameter: Float,
+    val flutes: Int,
+    val material: String,
+    val description: String,
+    val cuttingSpeed: Float,
+    val feedPerTooth: Float,
+    val imageUrl: String? = null
+) {
+    fun suitableFor(material: String, operation: String): Boolean {
+        return this.material.contains(material, ignoreCase = true)
+    }
+}

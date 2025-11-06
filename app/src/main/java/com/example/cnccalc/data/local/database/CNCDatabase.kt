@@ -1,17 +1,32 @@
-package com.example.cnccalc.data.database
+package com.example.cnccalc.data.local.database
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import android.content.Context
+import com.example.cnccalc.data.local.dao.*
+import com.example.cnccalc.data.local.entities.*
 
 @Database(
-    entities = [MachineEntity::class],
+    entities = [
+        ToolEntity::class,
+        MachineEntity::class,
+        MaterialEntity::class,
+        OperationEntity::class,
+        ChatHistoryEntity::class
+    ],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class CNCDatabase : RoomDatabase() {
+
+    abstract fun toolDao(): ToolDao
     abstract fun machineDao(): MachineDao
+    abstract fun materialDao(): MaterialDao
+    abstract fun operationDao(): OperationDao
+    abstract fun chatHistoryDao(): ChatHistoryDao
 
     companion object {
         @Volatile

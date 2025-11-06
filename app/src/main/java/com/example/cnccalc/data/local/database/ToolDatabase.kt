@@ -1,4 +1,4 @@
-package com.example.cnccalc.data.database
+package com.example.cnccalc.data.local.database
 
 import androidx.room.Database
 import androidx.room.Room

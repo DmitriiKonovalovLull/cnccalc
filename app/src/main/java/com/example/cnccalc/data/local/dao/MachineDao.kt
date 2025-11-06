@@ -1,0 +1,18 @@
+package com.example.cnccalc.data.local.dao
+
+import androidx.room.*
+import com.example.cnccalc.data.local.entities.MachineEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface MachineDao {
+
+    @Query("SELECT * FROM machines")
+    fun getAllMachines(): Flow<List<MachineEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMachine(machine: MachineEntity)
+
+    @Delete
+    suspend fun deleteMachine(machine: MachineEntity)
+}

@@ -21,3 +21,19 @@
 #-renamesourcefileattribute SourceFile
 # ML Kit и Moshi/OkHttp/Retrofit/Room обычно не требуют спец-правил на дебаге.
 # Если включишь minify — можно оставить пустым, либо добавить правила по докам библиотек.
+# Правила для Dagger Hilt
+-keep class com.konovalov.lull.cnccalc.Hilt_* { *; }
+-keepclasseswithmembers class * {
+    @dagger.hilt.internal.aggregatedroot.* *;
+}
+
+# Правила для Room
+-keep class * extends androidx.room.RoomDatabase
+-keep @androidx.room.Entity class *
+
+# Правила для Retrofit
+-keepattributes Signature, InnerClasses, EnclosingMethod
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
