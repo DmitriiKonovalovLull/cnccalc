@@ -2,9 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Разрешения для камеры и работы с файлами -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Фичи для камеры -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
     <application
         android:name=".CNCApplication"
@@ -13,9 +24,12 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
         android:theme="@style/Theme.CNCCalc"
         tools:targetApi="31">
 
+        <!-- Главная активность -->
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
@@ -25,5 +39,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Активность для анализа чертежей -->
+        <activity
+            android:name=".ui.drawing.DrawingProcessActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CNCCalc" />
+
+        <!-- Активность ассистента -->
+        <activity
+            android:name=".ui.assistant.AssistantActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CNCCalc" />
+
+        <!-- Активность библиотеки инструментов -->
+        <activity
+            android:name=".ui.tools.ToolsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CNCCalc" />
+
+        <!-- Мета-данные для настройки -->
+        <meta-data
+            android:name="android.hardware.camera.ar"
+            android:required="false" />
+
+        <!-- Сервисы для WorkManager (если будете использовать) -->
+        <service
+            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
     </application>
+
 </manifest>

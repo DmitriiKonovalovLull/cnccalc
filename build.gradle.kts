@@ -7,7 +7,3 @@ plugins {
     id("org.jetbrains.kotlin.kapt") version "2.0.21" apply false
 }
 
-// Временно удаляем задачу clean чтобы избежать NPE
-// tasks.register("clean", Delete::class) {
-//     delete(rootProject.buildDir)
-// }

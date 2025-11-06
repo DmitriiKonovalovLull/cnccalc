@@ -1,7 +1,8 @@
 package com.example.cnccalc.ai.drawing
 
 import android.graphics.Bitmap
-import com.example.cnccalc.data.models.DrawingAnalysis
+import com.example.cnccalc.data.model.DrawingAnalysis
+import com.example.cnccalc.data.model.Tool
 
 class DrawingAnalyzer {
 

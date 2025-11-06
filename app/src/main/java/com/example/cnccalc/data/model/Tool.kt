@@ -1,4 +1,4 @@
-package com.example.cnccalc.data.models
+package com.example.cnccalc.data.model
 
 import com.example.cnccalc.domain.models.ToolType
 

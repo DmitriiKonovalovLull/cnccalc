@@ -15,8 +15,8 @@ data class MaterialEntity(
     val feedRate: Float,
     val description: String
 ) {
-    fun toMaterial(): com.example.cnccalc.data.models.Material {
-        return com.example.cnccalc.data.models.Material(
+    fun toMaterial(): com.example.cnccalc.data.model.Material {
+        return com.example.cnccalc.data.model.Material(
             id = id,
             name = name,
             type = MaterialType.valueOf(type),
@@ -28,7 +28,7 @@ data class MaterialEntity(
     }
 }
 
-fun com.example.cnccalc.data.models.Material.toEntity(): MaterialEntity {
+fun com.example.cnccalc.data.model.Material.toEntity(): MaterialEntity {
     return MaterialEntity(
         id = id,
         name = name,

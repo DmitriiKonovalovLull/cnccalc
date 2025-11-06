@@ -14,8 +14,8 @@ data class MachineEntity(
     val workArea: String,
     val description: String
 ) {
-    fun toMachine(): com.example.cnccalc.data.models.Machine {
-        return com.example.cnccalc.data.models.Machine(
+    fun toMachine(): com.example.cnccalc.data.model.Machine {
+        return com.example.cnccalc.data.model.Machine(
             id = id,
             name = name,
             type = type,
@@ -27,7 +27,7 @@ data class MachineEntity(
     }
 }
 
-fun com.example.cnccalc.data.models.Machine.toEntity(): MachineEntity {
+fun com.example.cnccalc.data.model.Machine.toEntity(): MachineEntity {
     return MachineEntity(
         id = id,
         name = name,

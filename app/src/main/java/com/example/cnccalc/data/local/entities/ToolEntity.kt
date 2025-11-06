@@ -8,7 +8,7 @@ data class ToolEntity(
     @PrimaryKey
     val id: String,
     val name: String,
-    val type: String, // Храним как String вместо ToolType
+    val type: String,
     val diameter: Float,
     val flutes: Int,
     val material: String,
