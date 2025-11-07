@@ -7,5 +7,7 @@ data class Machine(
     val maxRPM: Int,
     val power: Float,
     val workArea: String,
-    val description: String
+    val description: String,
+    val model: String,
+    val manufacturer: String
 )

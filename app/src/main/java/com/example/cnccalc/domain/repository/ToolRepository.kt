@@ -1,6 +1,5 @@
 package com.example.cnccalc.domain.repository
 
-import com.example.cnccalc.domain.models.Tool
 import com.example.cnccalc.domain.models.ToolType
 import kotlinx.coroutines.flow.Flow
 

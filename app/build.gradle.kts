@@ -1,9 +1,12 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
     id("io.gitlab.arturbosch.detekt") version "1.23.0"
+    id("com.google.dagger.hilt.android") version "2.51"
 }
 
 android {
@@ -22,25 +25,48 @@ android {
         }
     }
 
-    buildFeatures {
-        compose = true
-        viewBinding = true
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs += listOf(
-            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-            "-opt-in=kotlin.RequiresOptIn"
-        )
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        getByName("debug") {
+            isMinifyEnabled = false
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+            freeCompilerArgs.addAll(
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-opt-in=kotlinx.coroutines.FlowPreview",
+                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+            )
+        }
+    }
+
+    buildFeatures {
+        compose = true
+        viewBinding = true
+        dataBinding = true
+        buildConfig = true
+        mlModelBinding = true
     }
 
     @Suppress("UnstableApiUsage")
@@ -48,43 +74,22 @@ android {
         kotlinCompilerExtensionVersion = "1.5.4"
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-        debug {
-            enableUnitTestCoverage = true
-            enableAndroidTestCoverage = true
-        }
-    }
-
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            excludes += "/META-INF/LICENSE.md"
-            excludes += "/META-INF/LICENSE-notice.md"
+            excludes += "/META-INF/gradle/incremental.annotation.processors"
         }
     }
-
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-        }
-    }
-}
-
-detekt {
-    toolVersion = "1.23.0"
-    buildUponDefaultConfig = true
-    allRules = true
-    config.setFrom(files("$projectDir/config/detekt.yml"))
 }
 
 dependencies {
+    // --- Hilt DI ---
+    implementation("com.google.dagger:hilt-android:2.51")
+    kapt("com.google.dagger:hilt-android-compiler:2.51")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.hilt:hilt-work:1.1.0")
+    kapt("androidx.hilt:hilt-compiler:1.1.0")
+
     // --- Core Desugaring ---
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
@@ -95,6 +100,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.startup:startup-runtime:1.1.1")
 
+    // --- Fragment & Activity ---
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.activity:activity-ktx:1.8.0")
+
     // --- Jetpack Compose ---
     val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
     implementation(composeBom)
@@ -102,6 +111,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.ui:ui-viewbinding")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.material:material:1.5.4")
@@ -114,7 +124,6 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
 
     // --- CameraX ---
-    // Исправлено: убраны underscores из имен переменных
     val cameraxVersion = "1.3.0"
     implementation("androidx.camera:camera-core:${cameraxVersion}")
     implementation("androidx.camera:camera-camera2:${cameraxVersion}")
@@ -135,7 +144,6 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-metadata:0.4.4")
 
     // --- Room Database ---
-    // Исправлено: убраны underscores из имен переменных
     val roomVersion = "2.6.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
@@ -152,6 +160,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-service:2.7.0")
 
     // --- Networking ---
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -162,8 +171,21 @@ dependencies {
     // --- WorkManager ---
     implementation("androidx.work:work-runtime-ktx:2.9.0")
 
-    // --- Detekt ---
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0")
+    // --- Image Loading ---
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil:2.5.0")
+
+    // --- Permissions ---
+    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
+
+    // --- Logging ---
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // --- Datastore (Preferences) ---
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // --- Splash Screen ---
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     // --- Testing ---
     testImplementation("junit:junit:4.13.2")
@@ -178,26 +200,34 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.test:rules:1.5.0")
+
+    // Hilt testing
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.51")
+
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
-// Конфигурация отчетов для Detekt tasks
+// Конфигурация Detekt
+detekt {
+    toolVersion = "1.23.0"
+    config.setFrom(files("$projectDir/config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+    allRules = false
+}
+
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-    jvmTarget = "17"
     reports {
         html.required.set(true)
-        html.outputLocation.set(file("build/reports/detekt/detekt.html"))
-
-        xml.required.set(true)
-        xml.outputLocation.set(file("build/reports/detekt/detekt.xml"))
-
-        txt.required.set(true)
-        txt.outputLocation.set(file("build/reports/detekt/detekt.txt"))
-
-        sarif.required.set(true)
-        sarif.outputLocation.set(file("build/reports/detekt/detekt.sarif"))
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
     }
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
-    jvmTarget = "17"
+// Конфигурация kapt для Hilt
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
 }

@@ -12,7 +12,9 @@ data class MachineEntity(
     val maxRPM: Int,
     val power: Float,
     val workArea: String,
-    val description: String
+    val description: String,
+    val model: String,
+    val manufacturer: String
 ) {
     fun toMachine(): com.example.cnccalc.data.model.Machine {
         return com.example.cnccalc.data.model.Machine(
@@ -22,7 +24,9 @@ data class MachineEntity(
             maxRPM = maxRPM,
             power = power,
             workArea = workArea,
-            description = description
+            description = description,
+            model = model,
+            manufacturer = manufacturer
         )
     }
 }
@@ -35,6 +39,9 @@ fun com.example.cnccalc.data.model.Machine.toEntity(): MachineEntity {
         maxRPM = maxRPM,
         power = power,
         workArea = workArea,
-        description = description
+        description = description,
+        model = model,
+        manufacturer = manufacturer
+
     )
 }

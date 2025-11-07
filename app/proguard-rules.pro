@@ -1,39 +1,137 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# ------------------------------
+# Hilt (Dependency Injection)
+# ------------------------------
+-keepattributes *Annotation*
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Просто удаляем проблемную строку:
+# -keep @dagger.hilt.InstallIn class *  ← КОММЕНТИРУЕМ ИЛИ УДАЛЯЕМ
+-keep class dagger.hilt.internal.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Конкретные классы Hilt вместо широких правил
+-keep @dagger.hilt.InstallIn class *
+-keep @dagger.hilt.android.AndroidEntryPoint class *
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
-# ML Kit и Moshi/OkHttp/Retrofit/Room обычно не требуют спец-правил на дебаге.
-# Если включишь minify — можно оставить пустым, либо добавить правила по докам библиотек.
-# Правила для Dagger Hilt
--keep class com.konovalov.lull.cnccalc.Hilt_* { *; }
--keepclasseswithmembers class * {
-    @dagger.hilt.internal.aggregatedroot.* *;
+-keep class dagger.hilt.internal.component.**
+-keep class dagger.hilt.processor.internal.**
+
+# Убрали проблемные строки 8, 13, 17
+# -keep class dagger.hilt.InstallIn  ← УДАЛЕНО (строка 8)
+# -keep class dagger.hilt.AndroidEntryPoint  ← УДАЛЕНО (строка 13)
+# -keep class * extends dagger.hilt.android.flags.HiltWrapper_FragmentGetContextFix_ActivityContextEntryPoint  ← УДАЛЕНО (строка 17)
+
+-keep class * extends dagger.hilt.internal.GeneratedComponentManagerHolder {
+    public static ** getComponentManager();
 }
 
-# Правила для Room
--keep class * extends androidx.room.RoomDatabase
--keep @androidx.room.Entity class *
+# ------------------------------
+# Room (Database)
+# ------------------------------
+# Более точные правила для Room
+-keep,allowobfuscation class * extends androidx.room.RoomDatabase
 
-# Правила для Retrofit
--keepattributes Signature, InnerClasses, EnclosingMethod
--keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
--keepclassmembers,allowshrinking,allowobfuscation interface * {
+# Сохраняем только классы с аннотацией @Entity
+-keep @androidx.room.Entity class * {
+    <fields>;
+}
+
+# Сохраняем классы DAO
+-keep class * extends androidx.room.Dao
+
+# ------------------------------
+# Retrofit & Gson (Networking)
+# ------------------------------
+-keepattributes Signature, *Annotation*
+
+# Более точные правила для Gson
+-keep class com.google.gson.reflect.TypeToken
+-keep class com.google.gson.stream.**
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+
+# Более точные правила для Retrofit
+-keep class retrofit2.http.**
+-keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
+}
+
+-keep class retrofit2.Call
+-keep class retrofit2.Callback
+-keep class retrofit2.Response
+-keep class retrofit2.Retrofit
+
+# ------------------------------
+# TensorFlow Lite (Machine Learning)
+# ------------------------------
+# Более специфичные правила для TensorFlow Lite
+-keep class org.tensorflow.lite.Interpreter
+-keep class org.tensorflow.lite.Tensor
+-keep class org.tensorflow.lite.support.model.Model
+-keep class org.tensorflow.lite.support.** { *; }
+
+# Основные классы TensorFlow Lite
+-keep class org.tensorflow.lite.TensorFlowLite
+
+# Убрали проблемные строки 72, 142
+# -keep class org.tensorflow.lite.nnapi.NnApiDelegate  ← УДАЛЕНО (строка 72)
+# -keep class org.tensorflow.lite.gpu.GpuDelegate  ← УДАЛЕНО (строка 142)
+
+# ------------------------------
+# ML Kit (Google Machine Learning)
+# ------------------------------
+# Более специфичные правила для ML Kit
+-keep class com.google.mlkit.vision.**
+-keep class com.google.mlkit.common.**
+-keep class com.google.mlkit.common.model.**
+
+# Вместо всех классов ML Kit, только основные модули
+-keep class com.google.mlkit.vision.barcode.** { *; }
+-keep class com.google.mlkit.vision.face.** { *; }
+-keep class com.google.mlkit.vision.text.** { *; }
+
+# ------------------------------
+# Kotlin Coroutines
+# ------------------------------
+-keep class kotlinx.coroutines.android.AndroidDispatcherFactory
+
+# ------------------------------
+# Android Jetpack Components
+# ------------------------------
+# ViewBinding
+-keep class * implements androidx.viewbinding.ViewBinding {
+    public static ** inflate(android.view.LayoutInflater);
+    public static ** bind(android.view.View);
+}
+
+# Navigation
+-keep class * implements androidx.navigation.NavArgs
+
+# Lifecycle
+-keep class * extends androidx.lifecycle.ViewModel
+-keepclassmembers class * extends androidx.lifecycle.ViewModel {
+    <init>(...);
+}
+
+# ------------------------------
+# Application Specific
+# ------------------------------
+# Сохраняем ваши основные классы приложения
+-keep class com.example.cnccalc.CNCApplication
+-keep class com.example.cnccalc.ui.activities.**
+-keep class com.example.cnccalc.ui.viewmodels.**
+-keep class com.example.cnccalc.data.repository.**
+-keep class com.example.cnccalc.data.local.dao.**
+
+# Сохраняем ваши модели данных
+-keep class com.example.cnccalc.data.model.** {
+    <fields>;
+    <methods>;
+}
+
+# ------------------------------
+# Общие правила для сериализации
+# ------------------------------
+# Сохраняем классы с аннотациями сериализации
+-keepclasseswithmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
 }

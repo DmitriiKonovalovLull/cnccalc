@@ -1,7 +1,7 @@
 package com.example.cnccalc.data.repository
 
 import com.example.cnccalc.domain.repository.DrawingRepository
-import com.example.cnccalc.data.models.DrawingAnalysis
+import com.example.cnccalc.data.model.DrawingAnalysis
 import javax.inject.Inject
 
 class DrawingRepositoryImpl @Inject constructor() : DrawingRepository {

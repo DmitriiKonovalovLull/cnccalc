@@ -17,8 +17,8 @@ data class ToolEntity(
     val feedPerTooth: Float,
     val imageUrl: String? = null
 ) {
-    fun toTool(): com.example.cnccalc.data.models.Tool {
-        return com.example.cnccalc.data.models.Tool(
+    fun toTool(): com.example.cnccalc.data.model.Tool {
+        return com.example.cnccalc.data.model.Tool(
             id = id,
             name = name,
             type = com.example.cnccalc.domain.models.ToolType.valueOf(type), // Конвертируем здесь
@@ -32,7 +32,7 @@ data class ToolEntity(
         )
     }
     // Функция расширения для конвертации Tool в ToolEntity
-    fun com.example.cnccalc.data.models.Tool.toEntity(): ToolEntity {
+    fun com.example.cnccalc.data.model.Tool.toEntity(): ToolEntity {
         return ToolEntity(
             id = id,
             name = name,

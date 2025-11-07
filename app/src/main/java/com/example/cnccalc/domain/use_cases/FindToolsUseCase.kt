@@ -1,6 +1,5 @@
 package com.example.cnccalc.domain.use_cases
 
-import com.example.cnccalc.domain.models.Tool
 import com.example.cnccalc.domain.repository.ToolRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

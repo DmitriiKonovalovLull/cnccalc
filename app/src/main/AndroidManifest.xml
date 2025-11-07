@@ -46,6 +46,13 @@
             android:exported="false"
             android:theme="@style/Theme.CNCCalc" />
 
+        <!-- ✅ ДОБАВЛЕНО: Активность для анализа чертежей с AI -->
+        <activity
+            android:name=".ui.activities.DrawingAnalysisActivity"
+            android:exported="false"
+            android:label="Анализ чертежей"
+            android:theme="@style/Theme.CNCCalc" />
+
         <!-- Активность ассистента -->
         <activity
             android:name=".ui.assistant.AssistantActivity"

@@ -2,7 +2,7 @@ package com.example.cnccalc.data.repository
 
 import com.example.cnccalc.data.local.dao.ChatHistoryDao
 import com.example.cnccalc.domain.repository.AssistantRepository
-import com.example.cnccalc.data.models.ChatMessage
+import com.example.cnccalc.data.model.ChatMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

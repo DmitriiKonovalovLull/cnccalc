@@ -1,6 +1,6 @@
 package com.example.cnccalc.domain.repository
 
-import com.example.cnccalc.data.models.ChatMessage
+import com.example.cnccalc.data.model.ChatMessage
 import kotlinx.coroutines.flow.Flow
 
 interface AssistantRepository {

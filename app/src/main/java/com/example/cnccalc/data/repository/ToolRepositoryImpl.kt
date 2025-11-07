@@ -1,7 +1,6 @@
 package com.example.cnccalc.data.repository
 
 import com.example.cnccalc.data.local.dao.ToolDao
-import com.example.cnccalc.domain.models.Tool
 import com.example.cnccalc.domain.models.ToolType
 import com.example.cnccalc.domain.repository.ToolRepository
 import kotlinx.coroutines.flow.Flow
