@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="21">
+    <bytecodeTargetLevel target="23">
       <module name="CNC_Calc.app" target="21" />
       <module name="CNC_Calculator.app" target="21" />
       <module name="MyApp.app" target="21" />
