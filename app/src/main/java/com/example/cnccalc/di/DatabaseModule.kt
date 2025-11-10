@@ -1,10 +1,11 @@
 package com.example.cnccalc.di
 
+import android.content.Context
 import com.example.cnccalc.data.local.database.CNCDatabase
-import com.example.cnccalc.data.local.dao.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -14,21 +15,25 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideToolDao(database: CNCDatabase): ToolDao = database.toolDao()
+    fun provideDatabase(@ApplicationContext context: Context): CNCDatabase {
+        return CNCDatabase.getInstance(context)
+    }
 
     @Provides
-    @Singleton
-    fun provideMachineDao(database: CNCDatabase): MachineDao = database.machineDao()
+    fun provideToolDao(database: CNCDatabase) = database.toolDao()
 
     @Provides
-    @Singleton
-    fun provideMaterialDao(database: CNCDatabase): MaterialDao = database.materialDao()
+    fun provideMachineDao(database: CNCDatabase) = database.machineDao()
 
     @Provides
-    @Singleton
-    fun provideOperationDao(database: CNCDatabase): OperationDao = database.operationDao()
+    fun provideMaterialDao(database: CNCDatabase) = database.materialDao()
 
     @Provides
-    @Singleton
-    fun provideChatHistoryDao(database: CNCDatabase): ChatHistoryDao = database.chatHistoryDao()
+    fun provideOperationDao(database: CNCDatabase) = database.operationDao()
+
+    @Provides
+    fun provideChatHistoryDao(database: CNCDatabase) = database.chatHistoryDao()
+
+    @Provides
+    fun provideKnowledgeDao(database: CNCDatabase) = database.knowledgeDao()
 }

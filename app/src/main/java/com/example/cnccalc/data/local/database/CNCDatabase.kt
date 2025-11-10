@@ -3,7 +3,6 @@ package com.example.cnccalc.data.local.database
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import android.content.Context
 import com.example.cnccalc.data.local.dao.*
 import com.example.cnccalc.data.local.entities.*
@@ -14,12 +13,12 @@ import com.example.cnccalc.data.local.entities.*
         MachineEntity::class,
         MaterialEntity::class,
         OperationEntity::class,
-        ChatHistoryEntity::class
+        ChatHistoryEntity::class,
+        KnowledgeEntity::class
     ],
-    version = 1,
-    exportSchema = false
+    version = 1, // Текущая версия
+    exportSchema = true
 )
-@TypeConverters(Converters::class) // Добавляем конвертеры
 abstract class CNCDatabase : RoomDatabase() {
 
     abstract fun toolDao(): ToolDao
@@ -27,18 +26,21 @@ abstract class CNCDatabase : RoomDatabase() {
     abstract fun materialDao(): MaterialDao
     abstract fun operationDao(): OperationDao
     abstract fun chatHistoryDao(): ChatHistoryDao
+    abstract fun knowledgeDao(): KnowledgeDao
 
     companion object {
         @Volatile
         private var INSTANCE: CNCDatabase? = null
 
-        fun getDatabase(context: Context): CNCDatabase {
+        fun getInstance(context: Context): CNCDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     CNCDatabase::class.java,
                     "cnc_database"
-                ).build()
+                )
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3) // Добавляем миграции
+                    .build()
                 INSTANCE = instance
                 instance
             }

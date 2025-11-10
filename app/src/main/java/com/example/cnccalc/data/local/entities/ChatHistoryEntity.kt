@@ -8,7 +8,8 @@ data class ChatHistoryEntity(
     @PrimaryKey
     val id: String,
     val message: String,
-    val isUser: Boolean,
+    val isUserMessage: Boolean,
     val timestamp: Long,
-    val context: String? = null
+    val context: String, // Контекст разговора (tool_selection, gcode_help, etc.)
+    val attachments: String? = null // JSON с вложениями
 )

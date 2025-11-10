@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.cnccalc.ui.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_main_to_tools"
+            app:destination="@id/toolsFragment" />
+
+        <action
+            android:id="@+id/action_main_to_assistant"
+            app:destination="@id/assistantFragment" />
+
+        <action
+            android:id="@+id/action_main_to_drawing"
+            app:destination="@id/drawingFragment" />
+
+        <action
+            android:id="@+id/action_main_to_machines"
+            app:destination="@id/machinesFragment" />
+
+        <action
+            android:id="@+id/action_main_to_materials"
+            app:destination="@id/materialsFragment" />
+    </fragment>
+
+    <!-- Заглушки для остальных экранов -->
+    <fragment
+        android:id="@+id/toolsFragment"
+        android:name="com.example.cnccalc.ui.tools.ToolsFragment"
+        android:label="ToolsFragment" />
+
+    <fragment
+        android:id="@+id/assistantFragment"
+        android:name="com.example.cnccalc.ui.assistant.AssistantFragment"
+        android:label="AssistantFragment" />
+
+    <fragment
+        android:id="@+id/drawingFragment"
+        android:name="com.example.cnccalc.ui.drawing.DrawingFragment"
+        android:label="DrawingFragment" />
+
+    <fragment
+        android:id="@+id/machinesFragment"
+        android:name="com.example.cnccalc.ui.machines.MachinesFragment"
+        android:label="MachinesFragment" />
+
+    <fragment
+        android:id="@+id/materialsFragment"
+        android:name="com.example.cnccalc.ui.materials.MaterialsFragment"
+        android:label="MaterialsFragment" />
+
+</navigation>

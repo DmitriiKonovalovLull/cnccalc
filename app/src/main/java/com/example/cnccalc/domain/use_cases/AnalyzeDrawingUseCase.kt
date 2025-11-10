@@ -1,13 +1,13 @@
 package com.example.cnccalc.domain.use_cases
 
-import com.example.cnccalc.data.models.DrawingAnalysis
+import com.example.cnccalc.data.model.DrawingAnalysis
 import com.example.cnccalc.domain.repository.DrawingRepository
 import javax.inject.Inject
 
 class AnalyzeDrawingUseCase @Inject constructor(
-    private val repository: DrawingRepository
+    private val drawingRepository: DrawingRepository
 ) {
     suspend operator fun invoke(imagePath: String): DrawingAnalysis {
-        return repository.analyzeDrawing(imagePath)
+        return drawingRepository.analyzeDrawing(imagePath)
     }
 }

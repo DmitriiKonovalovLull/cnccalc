@@ -18,7 +18,6 @@
         android:required="false" />
 
     <application
-        android:name=".CNCApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -40,47 +39,34 @@
             </intent-filter>
         </activity>
 
-        <!-- Активность для анализа чертежей -->
+        <!-- Убираем несуществующие активности -->
+        <!--
         <activity
             android:name=".ui.drawing.DrawingProcessActivity"
             android:exported="false"
             android:theme="@style/Theme.CNCCalc" />
 
-        <!-- ✅ ДОБАВЛЕНО: Активность для анализа чертежей с AI -->
         <activity
             android:name=".ui.activities.DrawingAnalysisActivity"
             android:exported="false"
             android:label="Анализ чертежей"
             android:theme="@style/Theme.CNCCalc" />
 
-        <!-- Активность ассистента -->
         <activity
             android:name=".ui.assistant.AssistantActivity"
             android:exported="false"
             android:theme="@style/Theme.CNCCalc" />
 
-        <!-- Активность библиотеки инструментов -->
         <activity
             android:name=".ui.tools.ToolsActivity"
             android:exported="false"
             android:theme="@style/Theme.CNCCalc" />
+        -->
 
         <!-- Мета-данные для настройки -->
         <meta-data
             android:name="android.hardware.camera.ar"
             android:required="false" />
-
-        <!-- Сервисы для WorkManager (если будете использовать) -->
-        <service
-            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <service
-            android:name="androidx.work.impl.background.systemjob.SystemJobService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

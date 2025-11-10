@@ -42,6 +42,5 @@ fun com.example.cnccalc.data.model.Machine.toEntity(): MachineEntity {
         description = description,
         model = model,
         manufacturer = manufacturer
-
     )
 }

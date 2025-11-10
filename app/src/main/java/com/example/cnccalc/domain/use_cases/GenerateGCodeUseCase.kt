@@ -4,9 +4,14 @@ import com.example.cnccalc.domain.repository.GCodeRepository
 import javax.inject.Inject
 
 class GenerateGCodeUseCase @Inject constructor(
-    private val repository: GCodeRepository
+    private val gCodeRepository: GCodeRepository
 ) {
-    suspend operator fun invoke(parameters: Map<String, Any>): String {
-        return repository.generateGCode(parameters)
+    suspend operator fun invoke(
+        toolId: String,
+        materialId: String,
+        machineId: String,
+        operations: List<String>
+    ): String {
+        return gCodeRepository.generateGCode(toolId, materialId, machineId, operations)
     }
 }

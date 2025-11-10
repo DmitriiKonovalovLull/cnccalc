@@ -1,3 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CNC Calc</string>
+    <string name="app_name">CNC Calculator</string>
+
+    <!-- Main Fragment -->
+    <string name="tools">Инструменты</string>
+    <string name="assistant">Ассистент</string>
+    <string name="drawing_analysis">Анализ чертежей</string>
+    <string name="machines">Станки</string>
+    <string name="materials">Материалы</string>
+
+    <!-- Common -->
+    <string name="error_loading">Ошибка загрузки</string>
+    <string name="retry">Повторить</string>
 </resources>

@@ -1,15 +1,19 @@
 package com.example.cnccalc.domain.use_cases
 
+import com.example.cnccalc.data.model.Tool
+import com.example.cnccalc.domain.models.ToolType
 import com.example.cnccalc.domain.repository.ToolRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FindToolsUseCase @Inject constructor(
-    private val repository: ToolRepository
+    private val toolRepository: ToolRepository
 ) {
-    operator fun invoke(material: String, operation: String): Flow<List<Tool>> {
-        return repository.getAllTools().map { tools ->
-            tools.filter { it.suitableFor(material, operation) }
+    suspend operator fun invoke(type: ToolType? = null): Flow<List<Tool>> {
+        return if (type != null) {
+            toolRepository.getToolsByType(type)
+        } else {
+            toolRepository.getAllTools()
         }
     }
 }
