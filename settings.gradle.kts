@@ -3,6 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://chaquo.com/maven-test") }  // ← ИСПРАВЛЕННЫЙ URL
         maven { url = uri("https://chaquo.com/maven") } // Критически важно для Chaquopy
     }
 
@@ -20,6 +21,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://chaquo.com/maven-test") }  // ← ИСПРАВЛЕННЫЙ URL
         maven { url = uri("https://chaquo.com/maven") }
     }
 
