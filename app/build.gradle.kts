@@ -65,9 +65,9 @@ java {
     }
 }
 
-// Chaquopy-specific settings (вынесены на верхний уровень)
+// Chaquopy-specific settings (Kotlin DSL)
 // При необходимости добавим pip зависимости позже
-python {
+extensions.configure<com.chaquo.python.PythonExtension> {
     // src/main/python используется по умолчанию
 }
 
