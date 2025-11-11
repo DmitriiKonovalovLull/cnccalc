@@ -5,6 +5,7 @@ plugins {
     id("com.chaquo.python")
     id("com.google.devtools.ksp")
 }
+
 android {
     namespace = "com.example.cnccalc"
     compileSdk = 35
@@ -45,14 +46,16 @@ android {
         buildConfig = true
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.11"
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
-
-chaquopy { }
 
 dependencies {
     // Core
@@ -69,33 +72,37 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    // Navigation (по желанию)
+    // Navigation
     implementation("androidx.navigation:navigation-compose:2.8.2")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
 
-    // Networking: Retrofit + OkHttp + Moshi
+    // Networking
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.11.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
 
-    // Room (через KSP)
+    // Room
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1") // ✅ KSP работает!
 
-    // WorkManager (фоновые задачи)
+    // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.1")
 
-    // DataStore (по желанию)
+    // DataStore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     // Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // Для TensorFlow Lite (позже)
+    implementation("org.tensorflow:tensorflow-lite:2.16.1")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
 
     // Тесты
     testImplementation("junit:junit:4.13.2")
