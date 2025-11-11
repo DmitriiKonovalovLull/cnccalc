@@ -41,12 +41,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    // Chaquopy-specific settings (оставим по умолчанию без pip для легкой сборки)
-    // При необходимости добавим зависимости позже
-    python {
-        // src/main/python используется по умолчанию
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -69,6 +63,12 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
+}
+
+// Chaquopy-specific settings (вынесены на верхний уровень)
+// При необходимости добавим pip зависимости позже
+python {
+    // src/main/python используется по умолчанию
 }
 
 dependencies {
