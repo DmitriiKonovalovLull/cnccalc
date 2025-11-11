@@ -62,13 +62,14 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
 
-    // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.08.00"))
+    // Compose - ОБНОВЛЕНО
+    implementation(platform("androidx.compose:compose-bom:2024.10.00"))
     implementation("androidx.activity:activity-compose:1.9.2")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3") // ДОБАВЛЕНО
+    implementation("com.google.android.material:material:1.11.0") // ДОБАВЛЕНО
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
@@ -89,7 +90,7 @@ dependencies {
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1") // ✅ KSP работает!
+    ksp("androidx.room:room-compiler:2.6.1")
 
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.1")
@@ -100,13 +101,13 @@ dependencies {
     // Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
 
-    // Для TensorFlow Lite (позже)
+    // Для TensorFlow Lite
     implementation("org.tensorflow:tensorflow-lite:2.16.1")
     implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
 
     // Тесты
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.08.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.10.00"))
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
